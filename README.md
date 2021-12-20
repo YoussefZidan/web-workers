@@ -1,3 +1,60 @@
+## What is Web Workers?
+
+A web worker is a JavaScript code that runs in the **background** and **does not** influence the page's performance.
+
+As we all know, JavaScript is a single threaded language, meaning it can only process one task at a time.
+
+**Example**
+
+```js
+let t = new Date();
+console.log(`tastk 1 took: ${new Date() - t}ms`);
+console.log(`tastk 2 took: ${new Date() - t}ms`);
+console.log(`tastk 3 took: ${new Date() - t}ms`);
+```
+
+In the above example we see in the console
+
+```
+tastk 1 took: 0ms
+tastk 2 took: 0ms
+tastk 3 took: 1ms
+```
+
+Is sequence just like we wrote.
+
+Because those tasks are simple, when you open the console, you'll see that all three lines have been printed and almost no time in between.
+
+But, What if one of the tasks took a longer time than the others?
+
+**Example**
+
+```js
+let t = new Date();
+console.log(`tastk 1 took: ${new Date() - t}ms`);
+console.log(`tastk 2 took: ${new Date() - t}ms`);
+let i = 0;
+while (i <= 10000000) {
+  i++;
+}
+console.log(`tastk 3 took: ${new Date() - t}ms`);
+```
+
+In my machine, it took 2777ms to print `task 3`.
+
+```
+tastk 1 took: 0ms
+tastk 2 took: 1ms
+tastk 3 took: 2777ms
+```
+
+## More Detailed Example
+
+Copy the following code and paste it inside `index.html` file or download the [GitHub Repo]()
+
+index.html
+
+```html
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -69,3 +126,4 @@
     <button onclick="workerCalculation()">Worker Calculation</button>
   </body>
 </html>
+```
