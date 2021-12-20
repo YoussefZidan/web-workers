@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- counter -->
+    <script>
+      let counter = 0;
+      let intervalId = null;
+      const counter = () => {
+        if (!intervalId) {
+          intervalId = setInterval(() => {
+            counter++;
+            document.getElementById("id").innerText = counter;
+          }, 300);
+        } else {
+          clearInterval(intervalId);
+          counter = 0;
+          document.getElementById("id").innerText = counter;
+          intervalId = null;
+        }
+      };
+    </script>
+
+    <!-- longCalculation -->
+    <script>
+      const longCalculation = () => {
+        let i = 0;
+        while (i <= 10000000000) {
+          i++;
+        }
+        alert("Long calculation finished!");
+      };
+    </script>
+
+    <!-- promiseCalculation -->
+    <script>
+      const promiseCalculation = () => {
+        Promise.resolve().then(() => {
+          let i = 0;
+          while (i <= 10000000000) {
+            i++;
+          }
+          alert("Promise calculation finished!");
+        });
+      };
+    </script>
+
+    <!-- workerCalculation -->
+    <script>
+      const workerCalculation = () => {
+        let worker = new Worker("./js/worker.js");
+        worker.onmessage = (e) => {
+          alert(e.data);
+        };
+      };
+    </script>
+  </head>
+  <body>
+    <h3>Counter: <span id="id"> # </span></h3>
+
+    <button onclick="counter()">Start Counter</button>
+    <button onclick="longCalculation()">Long Calculation</button>
+    <button onclick="promiseCalculation()">Promise Calculation</button>
+    <button onclick="workerCalculation()">Worker Calculation</button>
+  </body>
+</html>
