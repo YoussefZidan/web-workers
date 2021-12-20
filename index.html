@@ -9,18 +9,18 @@
 
     <!-- counter -->
     <script>
-      let counter = 0;
+      let i = 0;
       let intervalId = null;
       const counter = () => {
         if (!intervalId) {
           intervalId = setInterval(() => {
-            counter++;
-            document.getElementById("id").innerText = counter;
+            i++;
+            document.getElementById("id").innerText = i;
           }, 300);
         } else {
           clearInterval(intervalId);
-          counter = 0;
-          document.getElementById("id").innerText = counter;
+          i = 0;
+          document.getElementById("id").innerText = i;
           intervalId = null;
         }
       };
