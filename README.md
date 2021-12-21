@@ -167,7 +167,7 @@ We'll use this callback to alert the `data` that comes from the `postMessage` me
 
 The calculation will now take place in the background, and the page will not become unresponsive.
 
-**The final result**
+**Final index.html file**
 
 ```html
 <!DOCTYPE html>
