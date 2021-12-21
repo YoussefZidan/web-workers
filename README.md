@@ -1,12 +1,12 @@
-- [What is Web Worker?](#what-is-web-worker)
+- [What are Web Workers?](#what-are-web-workers)
 - [Using Web Workers](#using-web-workers)
 - [Browser Support](#browser-support)
 
-## What is Web Worker?
+## What are Web Workers?
 
 A web worker is a JavaScript code that runs in the **background** and **does not** influence the page's performance.
 
-As we all know, JavaScript is a single threaded language, meaning it can only process one task at a time.
+As we all know, JavaScript is a single-threaded language, meaning it can only process one task at a time.
 
 **Example**
 
@@ -17,7 +17,7 @@ console.log(`tastk 2 took: ${new Date() - t}ms`);
 console.log(`tastk 3 took: ${new Date() - t}ms`);
 ```
 
-In the above example we see the following output in the console, In sequence just like we wrote.
+In the above example, we see the following output in the console, In sequence just like we wrote.
 
 ```
 tastk 1 took: 0ms
@@ -118,7 +118,7 @@ Because JavaScript is a single-threaded language, it must wait for the calculati
 
 ## Using Web Workers
 
-This is where Web Workers comes in to help.
+This is where Web Workers come in to help.
 
 If a process is likely to take a long time, the user is not expected to wait until it is completed. This is actually a poor user experience.
 
