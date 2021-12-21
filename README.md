@@ -1,4 +1,8 @@
-## What is Web Workers API?
+- [What is Web Worker?](#what-is-web-worker)
+- [Using Web Workers](#using-web-workers)
+- [Browser Support](#browser-support)
+
+## What is Web Worker?
 
 A web worker is a JavaScript code that runs in the **background** and **does not** influence the page's performance.
 
@@ -48,7 +52,7 @@ tastk 3 took: 2777ms
 
 **Another Example**
 
-Copy the following code and paste it inside `index.html` file or download the [GitHub Repo]()
+Copy the following code and paste it inside `index.html` file or download the [GitHub Repo](https://github.com/YoussefZidan/web-workers)
 
 index.html
 
@@ -108,9 +112,9 @@ When you click on it, you'll see that the counter _along with the rest of the pa
 
 <img src="https://media.giphy.com/media/YMIWb3yplxgfzaDWYy/giphy.gif" />
 
-> The browser may also issue a warning, such as *this page is slowing down your browser or this page is not responsive*, or anything similar.
+> The browser may also issue a warning, such as _this page is slowing down your browser or this page is not responsive_, or anything similar.
 
-Because JavaScript is a single-threaded language, it must wait for the calculation to complete before continuing. 
+Because JavaScript is a single-threaded language, it must wait for the calculation to complete before continuing.
 
 ## Using Web Workers
 
@@ -164,5 +168,31 @@ We'll use this callback to alert the `data` that comes from the `postMessage` me
 The calculation will now take place in the background, and the page will not become unresponsive.
 
 ## Browser Support
+
+Web Workers aren't supported by all browsers.
+
+We need to check whether the user's browser supports web workers before creating one:
+
+```js
+if (typeof Worker !== "undefined") {
+  // Yes!
+} else {
+  // No!
+}
+```
+
+So our worker.js file should be:
+
+```js
+if (typeof Worker !== "undefined") {
+  let i = 0;
+  while (i <= 1000000000) {
+    i++;
+  }
+  postMessage("Worker calculation finished!");
+} else {
+  alert("Your browser doesn't support web workers.");
+}
+```
 
 > Learn more about [Web Workers API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
