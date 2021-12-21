@@ -167,6 +167,68 @@ We'll use this callback to alert the `data` that comes from the `postMessage` me
 
 The calculation will now take place in the background, and the page will not become unresponsive.
 
+**The final result**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Web Workers</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- counter -->
+    <script>
+      let i = 0;
+      let intervalId = null;
+      const counter = () => {
+        if (!intervalId) {
+          intervalId = setInterval(() => {
+            i++;
+            document.getElementById("counter").innerText = i;
+          }, 300);
+        } else {
+          clearInterval(intervalId);
+          i = 0;
+          document.getElementById("counter").innerText = i;
+          intervalId = null;
+        }
+      };
+    </script>
+
+    <!-- longCalculation -->
+    <script>
+      const longCalculation = () => {
+        let i = 0;
+        while (i <= 10000000000) {
+          i++;
+        }
+        alert("Long calculation finished!");
+      };
+    </script>
+
+    <!-- workerCalculation -->
+    <script>
+      const workerCalculation = () => {
+        let worker = new Worker("worker.js");
+        worker.onmessage = (e) => {
+          alert(e.data);
+        };
+      };
+    </script>
+  </head>
+  <body>
+    <h3>Counter: <span id="counter"> # </span></h3>
+
+    <button onclick="counter()">Start Counter</button>
+    <button onclick="longCalculation()">Long Calculation</button>
+    <button onclick="workerCalculation()">Worker Calculation</button>
+  </body>
+</html>
+```
+
 ## Browser Support
 
 Web Workers aren't supported by all browsers.
