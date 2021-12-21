@@ -37,23 +37,10 @@
       };
     </script>
 
-    <!-- promiseCalculation -->
-    <script>
-      const promiseCalculation = () => {
-        Promise.resolve().then(() => {
-          let i = 0;
-          while (i <= 10000000000) {
-            i++;
-          }
-          alert("Promise calculation finished!");
-        });
-      };
-    </script>
-
     <!-- workerCalculation -->
     <script>
       const workerCalculation = () => {
-        let worker = new Worker("./js/worker.js");
+        let worker = new Worker("worker.js");
         worker.onmessage = (e) => {
           alert(e.data);
         };
@@ -65,7 +52,6 @@
 
     <button onclick="counter()">Start Counter</button>
     <button onclick="longCalculation()">Long Calculation</button>
-    <button onclick="promiseCalculation()">Promise Calculation</button>
     <button onclick="workerCalculation()">Worker Calculation</button>
   </body>
 </html>

@@ -1,4 +1,4 @@
-## What is Web Workers?
+## What is Web Workers API?
 
 A web worker is a JavaScript code that runs in the **background** and **does not** influence the page's performance.
 
@@ -13,15 +13,13 @@ console.log(`tastk 2 took: ${new Date() - t}ms`);
 console.log(`tastk 3 took: ${new Date() - t}ms`);
 ```
 
-In the above example we see in the console
+In the above example we see the following output in the console, In sequence just like we wrote.
 
 ```
 tastk 1 took: 0ms
 tastk 2 took: 0ms
 tastk 3 took: 1ms
 ```
-
-Is sequence just like we wrote.
 
 Because those tasks are simple, when you open the console, you'll see that all three lines have been printed and almost no time in between.
 
@@ -48,7 +46,7 @@ tastk 2 took: 1ms
 tastk 3 took: 2777ms
 ```
 
-## More Detailed Example
+**Another Example**
 
 Copy the following code and paste it inside `index.html` file or download the [GitHub Repo]()
 
@@ -93,37 +91,78 @@ index.html
         alert("Long calculation finished!");
       };
     </script>
-
-    <!-- promiseCalculation -->
-    <script>
-      const promiseCalculation = () => {
-        Promise.resolve().then(() => {
-          let i = 0;
-          while (i <= 10000000000) {
-            i++;
-          }
-          alert("Promise calculation finished!");
-        });
-      };
-    </script>
-
-    <!-- workerCalculation -->
-    <script>
-      const workerCalculation = () => {
-        let worker = new Worker("./js/worker.js");
-        worker.onmessage = (e) => {
-          alert(e.data);
-        };
-      };
-    </script>
   </head>
   <body>
     <h3>Counter: <span id="counter"> # </span></h3>
-
     <button onclick="counter()">Start Counter</button>
     <button onclick="longCalculation()">Long Calculation</button>
-    <button onclick="promiseCalculation()">Promise Calculation</button>
-    <button onclick="workerCalculation()">Worker Calculation</button>
   </body>
 </html>
 ```
+
+The first button is a simple counter that begins counting as soon as you click on it.
+
+The other button is a piece of code that takes a long time to run.
+
+When you click on it, you'll see that the counter _along with the rest of the page_ is frozen until the calculation is completed.
+
+<img src="https://media.giphy.com/media/YMIWb3yplxgfzaDWYy/giphy.gif" />
+
+> The browser may also issue a warning, such as *this page is slowing down your browser or this page is not responsive*, or anything similar.
+
+Because JavaScript is a single-threaded language, it must wait for the calculation to complete before continuing. 
+
+## Using Web Workers
+
+This is where Web Workers comes in to help.
+
+If a process is likely to take a long time, the user is not expected to wait until it is completed. This is actually a poor user experience.
+
+Instead, such long tasks should be performed in the background.
+
+Let's create another button `Worker Calculation`.
+
+```html
+<button onclick="workerCalculation()">Worker Calculation</button>
+```
+
+Now we will add the logic of the long calculation in a separate file.
+
+worker.js
+
+```js
+let i = 0;
+while (i <= 1000000000) {
+  i++;
+}
+postMessage("Worker calculation finished!");
+```
+
+And instead of alerting the value directly, we will use the `postMessage` method.
+
+And the logic of the `workerCalculation` function will be:
+
+```html
+<script>
+  const workerCalculation = () => {
+    let worker = new Worker("worker.js");
+    worker.onmessage = (e) => {
+      alert(e.data);
+    };
+  };
+</script>
+```
+
+- Create a `worker` instance.
+- Include the worker's path.
+- Add an `onmessage` callback that takes an `event` as an argument
+
+We'll use this callback to alert the `data` that comes from the `postMessage` method when the calculation is complete.
+
+<img src="https://media.giphy.com/media/KlWzCmIQeOOzoXBNzm/giphy.gif" />
+
+The calculation will now take place in the background, and the page will not become unresponsive.
+
+## Browser Support
+
+> Learn more about [Web Workers API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
